@@ -2,96 +2,53 @@ import kivy
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
-from kivy.uix.label import Label
 
-# Класс для представления пиццы
-class Pizza:
-    def __init__(self, name, price):
-        self.name = name
-        self.price = price
-
-# Класс для представления напитка
-class Beverage:
-    def __init__(self, name, price):
-        self.name = name
-        self.price = price
-
-# Класс для представления заказа
-class Order:
-    def __init__(self):
-        self.selected_pizza = None
-        self.selected_beverage = None
-
-    def select_pizza(self, pizza):
-        self.selected_pizza = pizza
-
-    def select_beverage(self, beverage):
-        self.selected_beverage = beverage
-
-    def get_total_price(self):
-        total_price = 0
-        if self.selected_pizza:
-            total_price += self.selected_pizza.price
-        if self.selected_beverage:
-            total_price += self.selected_beverage.price
-        return total_price
-
-# Класс для интерфейса приложения
-class PizzaOrderApp(App):
+class ShaurmaOrderApp(App):
     def build(self):
-        # Создаем экземпляр заказа
-        self.order = Order()
-
-        # Создаем главный макет
         layout = BoxLayout(orientation='vertical')
 
-        # Создаем кнопки для выбора пиццы
-        pizza_btn1 = Button(text='Пепперони - 800 руб.')
-        pizza_btn1.bind(on_press=lambda instance: self.order.select_pizza(Pizza("Пепперони", 800)))
-        layout.add_widget(pizza_btn1)
+        shaurma_btn1 = Button(text='Мясная - 450 руб.', on_press=lambda instance: self.select_item("Шаурма: Мясная - 450 руб."))
+        shaurma_btn2 = Button(text='Цезарь - 350 руб.', on_press=lambda instance: self.select_item("Шаурма: Цезарь - 350 руб."))
+        shaurma_btn3 = Button(text='Царская - 400 руб.', on_press=lambda instance: self.select_item("Шаурма: Царская - 400 руб."))
 
-        pizza_btn2 = Button(text='Маргарита - 750 руб.')
-        pizza_btn2.bind(on_press=lambda instance: self.order.select_pizza(Pizza("Маргарита", 750)))
-        layout.add_widget(pizza_btn2)
+        beverage_btn1 = Button(text='Кола - 150 руб.', on_press=lambda instance: self.select_item("Напиток: Кола - 150 руб."))
+        beverage_btn2 = Button(text='Фанта - 150 руб.', on_press=lambda instance: self.select_item("Напиток: Фанта - 150 руб."))
+        beverage_btn3 = Button(text='Сок - 200 руб.', on_press=lambda instance: self.select_item("Напиток: Сок - 200 руб."))
 
-        pizza_btn3 = Button(text='Гавайская - 900 руб.')
-        pizza_btn3.bind(on_press=lambda instance: self.order.select_pizza(Pizza("Гавайская", 900)))
-        layout.add_widget(pizza_btn3)
+        sauce_btn1 = Button(text='Чесночный - 50 руб.', on_press=lambda instance: self.select_item("Соус: Чесночный - 50 руб."))
+        sauce_btn2 = Button(text='Ткемали - 40 руб.', on_press=lambda instance: self.select_item("Соус: Ткемали - 40 руб."))
+        sauce_btn3 = Button(text='Сырный - 60 руб.', on_press=lambda instance: self.select_item("Соус: Сырный - 60 руб."))
 
-        # Создаем кнопки для выбора напитка
-        beverage_btn1 = Button(text='Кола - 150 руб.')
-        beverage_btn1.bind(on_press=lambda instance: self.order.select_beverage(Beverage("Кола", 150)))
+        confirm_btn = Button(text='Показать покупки и сумму', on_press=self.show_summary)
+
+        self.items = []
+
+        layout.add_widget(shaurma_btn1)
+        layout.add_widget(shaurma_btn2)
+        layout.add_widget(shaurma_btn3)
         layout.add_widget(beverage_btn1)
-
-        beverage_btn2 = Button(text='Фанта - 150 руб.')
-        beverage_btn2.bind(on_press=lambda instance: self.order.select_beverage(Beverage("Фанта", 150)))
         layout.add_widget(beverage_btn2)
-
-        beverage_btn3 = Button(text='Сок - 200 руб.')
-        beverage_btn3.bind(on_press=lambda instance: self.order.select_beverage(Beverage("Сок", 200)))
         layout.add_widget(beverage_btn3)
-
-        # Кнопка для оформления заказа
-        confirm_btn = Button(text='Оформить заказ')
-        confirm_btn.bind(on_press=self.display_order)
+        layout.add_widget(sauce_btn1)
+        layout.add_widget(sauce_btn2)
+        layout.add_widget(sauce_btn3)
         layout.add_widget(confirm_btn)
 
         return layout
 
-    # Метод для отображения заказа
-    def display_order(self, instance):
-        total_price = self.order.get_total_price()
-        order_summary = "Заказ:\n"
-        if self.order.selected_pizza:
-            order_summary += f"Пицца: {self.order.selected_pizza.name} - {self.order.selected_pizza.price} руб.\n"
-        if self.order.selected_beverage:
-            order_summary += f"Напиток: {self.order.selected_beverage.name} - {self.order.selected_beverage.price} руб.\n"
-        order_summary += f"Общая стоимость заказа: {total_price} руб."
+    def select_item(self, item):
+        self.items.append(item)
 
-        # Очистка и добавление элементов на экран
+    def show_summary(self, instance):
+        items_summary = "\n".join(self.items)
+        total_price = sum([int(item.split(" - ")[-1].split()[0]) for item in self.items])
+        items_summary += f"\n\nОбщая сумма: {total_price} руб."
         self.root.clear_widgets()
-        self.root.add_widget(Label(text=order_summary))
+        self.root.add_widget(Button(text=items_summary, on_press=self.restart))
 
-# Создание экземпляра приложения
+    def restart(self, instance):
+        self.items = []
+        self.build()
+
 if __name__ == '__main__':
-    PizzaOrderApp().run()
+    ShaurmaOrderApp().run()
