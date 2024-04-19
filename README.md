@@ -1,28 +1,39 @@
-# Pizza Ordering App
+# Timer Project
 
-The Pizza Ordering App is a simple mobile application developed using the Kivy library in Python. This app allows users to browse through a selection of pizzas and beverages, and place an order.
+## Description:
 
-## Features
+This project is a timer application created using Python and Flask framework. The timer allows users to set a specific amount of time and start the countdown. Once the timer reaches zero, the user will be notified through a sound alert or a pop-up notification.
 
-1. **Pizza Selection**: Users can choose from a variety of pizza options, including Pepperoni, Margherita, and Hawaiian.
+## Features:
 
-2. **Beverage Selection**: The app also offers a range of beverages such as Cola, Fanta, and Juice.
+- Set a specific amount of time for the timer
+- Start, pause, and reset the timer
+- Sound alert or pop-up notification when the timer reaches zero
 
-3. **Order Placement**: After making their selections, users can finalize their order and view a summary including the chosen items and the total price.
+## Technologies Used:
 
-4. **User-Friendly Interface**: The app features a vertical layout designed for easy use on a mobile device.
+- Python
+- Flask framework
+- HTML/CSS
+- JavaScript
 
-## Technical Details
+## Installation Instructions:
 
-The app is built using the Kivy framework for the graphical user interface. It uses the BoxLayout to organize the UI components in a vertical orientation. The classes Pizza, Beverage, and Order are used to represent the pizza and beverage options, as well as manage the user's order.
+1. Clone the repository
+2. Install Flask using pip install Flask
+3. Run the application using python app.py
 
-## Next Steps
+## Usage:
 
-Future enhancements to the app may include the ability to customize pizza toppings, integrate payment and delivery options, and incorporate user authentication for order tracking.
+1. Set the desired amount of time on the timer
+2. Click on the start button to begin the countdown
+3. Pause or reset the timer as needed
+4. Wait for the sound alert or pop-up notification when the timer reaches zero
 
-Overall, the Pizza Ordering App provides a simple and intuitive way for users to place orders for their favorite pizzas and beverages through a mobile interface.
+## Future Improvements:
 
-For further information, please refer to the source files in the repository.
+- Add the ability to set multiple timers
+- Customize the sound alert and notification options
+- Implement user authentication and save timer settings for each user
 
-Feel free to modify and expand the app to suit your specific requirements!
-
+Feel free to contribute to the project or suggest any improvements to make the timer application even better!
