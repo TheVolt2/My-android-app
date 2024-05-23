@@ -39,21 +39,27 @@ unit_map = {
     'куб.м': 'cubic meter'
 }
 
+# Функция для конвертации единиц
 def convert_units(value, from_unit, to_unit):
     try:
+        # Преобразование пользовательских сокращений в единицы pint
         from_unit_converted = unit_map[from_unit]
         to_unit_converted = unit_map[to_unit]
+        # Конвертация значений с использованием pint
         result = (value * ureg(from_unit_converted)).to(to_unit_converted)
         return result
     except Exception as e:
         return str(e)
 
+# Функция для сложения и вычитания единиц
 def add_or_subtract_units(value1, unit1, value2, unit2, operation):
     try:
+        # Преобразование пользовательских сокращений в единицы pint
         unit1_converted = unit_map[unit1]
         unit2_converted = unit_map[unit2]
         quantity1 = value1 * ureg(unit1_converted)
         quantity2 = value2 * ureg(unit2_converted)
+        # Выполнение операции сложения или вычитания
         if operation == "add":
             result = quantity1 + quantity2
         elif operation == "subtract":
@@ -62,7 +68,9 @@ def add_or_subtract_units(value1, unit1, value2, unit2, operation):
     except Exception as e:
         return str(e)
 
+# Главная функция для приложения Flet
 def main(page: ft.Page):
+    # Определение элементов интерфейса
     value1_input = ft.TextField(label="Значение 1", width=200, border_color=ft.colors.LIME, color=ft.colors.LIME)
     unit1_input = ft.TextField(label="Единица 1", width=200, border_color=ft.colors.LIME, color=ft.colors.LIME)
     value2_input = ft.TextField(label="Значение 2", width=200, border_color=ft.colors.LIME, color=ft.colors.LIME)
@@ -70,11 +78,13 @@ def main(page: ft.Page):
     to_unit_input = ft.TextField(label="Целевая единица", width=200, border_color=ft.colors.LIME, color=ft.colors.LIME)
     result_text = ft.Text(style="bodyText1", color=ft.colors.LIME, font_family="Roboto Condensed")
 
+    # Обработчик события для кнопки "Конвертировать"
     def convert_click(e):
         try:
             value = float(value1_input.value)
             from_unit = unit1_input.value.strip().lower()
             to_unit = to_unit_input.value.strip().lower()
+            # Проверка на правильность ввода единиц
             if from_unit not in unit_map or to_unit not in unit_map:
                 result_text.value = "Неправильная единица измерения. Пожалуйста, используйте допустимые сокращения."
             else:
@@ -87,12 +97,14 @@ def main(page: ft.Page):
             result_text.value = "Введите корректное числовое значение"
         page.update()
 
+    # Обработчик события для кнопки "Сложить"
     def add_click(e):
         try:
             value1 = float(value1_input.value)
             unit1 = unit1_input.value.strip().lower()
             value2 = float(value2_input.value)
             unit2 = unit2_input.value.strip().lower()
+            # Проверка на правильность ввода единиц
             if unit1 not in unit_map or unit2 not in unit_map:
                 result_text.value = "Неправильная единица измерения. Пожалуйста, используйте допустимые сокращения."
             else:
@@ -105,12 +117,14 @@ def main(page: ft.Page):
             result_text.value = "Введите корректное числовое значение"
         page.update()
 
+    # Обработчик события для кнопки "Вычесть"
     def subtract_click(e):
         try:
             value1 = float(value1_input.value)
             unit1 = unit1_input.value.strip().lower()
             value2 = float(value2_input.value)
             unit2 = unit2_input.value.strip().lower()
+            # Проверка на правильность ввода единиц
             if unit1 not in unit_map or unit2 not in unit_map:
                 result_text.value = "Неправильная единица измерения. Пожалуйста, используйте допустимые сокращения."
             else:
@@ -123,6 +137,7 @@ def main(page: ft.Page):
             result_text.value = "Введите корректное числовое значение"
         page.update()
 
+    # Обработчик события для кнопки "Очистить"
     def clear_click(e):
         value1_input.value = ""
         unit1_input.value = ""
@@ -132,6 +147,7 @@ def main(page: ft.Page):
         result_text.value = ""
         page.update()
 
+    # Заголовок страницы и добавление элементов интерфейса
     page.title = "Универсальный Калькулятор"
     page.add(
         ft.Text("Универсальный Калькулятор", style="headline4", color=ft.colors.LIME, font_family="Roboto Condensed"),
@@ -158,7 +174,9 @@ def main(page: ft.Page):
         result_text
     )
 
+    # Установка фонового цвета страницы
     page.bgcolor = ft.colors.BLACK
     page.update()
 
+# Запуск приложения
 ft.app(target=main)
