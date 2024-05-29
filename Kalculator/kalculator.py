@@ -92,7 +92,7 @@ def main(page: ft.Page):
                 if isinstance(result, str):
                     result_text.value = f"Ошибка при конвертации: {result}"
                 else:
-                    result_text.value = f"{value} {from_unit} = {result:.6f} {to_unit}"
+                    result_text.value = f"{value} {from_unit} = {result:.15f} {to_unit}"
         except ValueError:
             result_text.value = "Введите корректное числовое значение"
         page.update()
